@@ -24,6 +24,8 @@ public class Formatter {
 	private File fileInput;
 	private File fileOutput;
 	
+	private int numberOfReplaces = 0;
+	
 	byte[] bytes;
 	
 	
@@ -60,6 +62,7 @@ public class Formatter {
 					int len;
 					while ((len = raf.read(bytes, 0, BUFFER_LENGTH)) != -1){
 						
+						
 						String s1 = new String(bytes, 0, len);
 						//System.out.println(s1);
 						
@@ -69,6 +72,8 @@ public class Formatter {
 						
 					//	System.out.println("INDEX: " +indexBehindLastFoundedWord);
 						int indexBehindLastFoundedWord = findIndexBehindLastFoundedWord(s1);
+						int count = countNumberOfReplaces(s1);
+						numberOfReplaces+=count;
 						
 						
 						int indexWhereStartToSearch = BUFFER_LENGTH - (STRING_TO_FIND.length() - 1);
@@ -176,6 +181,15 @@ public class Formatter {
 		//
 		return lastIndex;
 	}
+	private int countNumberOfReplaces(String s){
+		int fromIndex = 0;
+		int count = 0;
+		while((fromIndex = s.indexOf(STRING_TO_FIND, fromIndex))!=-1){
+			fromIndex += STRING_TO_FIND.length();
+			++count;
+		}
+		return count;
+	}
 	
 	private void changeName(){
 		System.out.println("zmiana");
@@ -187,5 +201,8 @@ public class Formatter {
 		
 		fileOutput.renameTo(new File(fileOutput.getParentFile()+"\\"+name));
 		System.out.println(fileOutput.getParentFile());
+	}
+	public int getNumberOfReplaces(){
+		return numberOfReplaces;
 	}
 }

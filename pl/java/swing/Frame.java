@@ -1,37 +1,23 @@
 package pl.java.swing;
 
-import java.awt.Checkbox;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import pl.java.formatter.Manager;
 
 public class Frame extends JFrame{
 
@@ -86,10 +72,7 @@ public class Frame extends JFrame{
 	}
 	
 	private void initLayout(){
-		   // setLayout(new FlowLayout());   
-		//setLayout(new GridBagLayout()); 
-		//setLayout(new FlowLayout(FlowLayout.LEFT));
-		//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		 
 		setLayout(new GridBagLayout());
 		
 		    JPanel labelListPane = new JPanel();
@@ -112,13 +95,12 @@ public class Frame extends JFrame{
 		    gc.gridx = 0;
 		    gc.gridy = 1;
 		    
-		    //labelListPane.add(pathButton);
 		    add(chosedPathLabel, gc);
 		    
 		    gc.gridx = 0;
 		    gc.gridy = 2;
 		    add(extensionLabel, gc);
-		    //labelListPane.add(extensionField);
+
 		    gc.gridx = 0;
 		    gc.gridy = 3;
 		    
@@ -129,7 +111,7 @@ public class Frame extends JFrame{
 		    
 		    gc.gridy = 5;
 		    add(hex1Label, gc);
-		    //labelListPane.add(byte1Field);
+
 		    gc.gridx = 0;
 		    gc.gridy = 6;
 		    
@@ -140,7 +122,6 @@ public class Frame extends JFrame{
 		    
 		    gc.gridy = 8;
 		    add(hex2Label, gc);
-		    //labelListPane.add(byte2Field);
 		    
 		    gc.anchor = GridBagConstraints.LINE_END;
 		    gc.gridy=4;
@@ -182,13 +163,6 @@ public class Frame extends JFrame{
 		    gc.gridy = 8;
 		    add(byte2FieldHex, gc);
 		    
-		 //   JPanel valuesPane = new JPanel();
-		  //  valuesPane.add(acceptButton);
-		  //  valuesPane.add(specialButton);
-		    
-		    
-		    //gc.weightx = 20;
-		    //gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		    gc.weightx = 1;
 		    gc.gridx = 2;
 		    gc.gridy = 5;
@@ -206,17 +180,6 @@ public class Frame extends JFrame{
 		    gc.gridy = 9;
 		    gc.gridwidth = 3;
 		    add(acceptButton, gc);
-		    
-		  //  add(labelListPane);
-		  //  add(fieldListPane);
-		  //  add(valuesPane);
-		    
-		    
-		    
-		    
-		    
-		    
-		  //  pack();
 	}
 	
 	private void initComponents(){
@@ -234,7 +197,7 @@ public class Frame extends JFrame{
 	    pathButton.setBackground(Color.GREEN);
 	    
 	    chosedCurrentPath = new JLabel("");
-	    chosedCurrentPath.setPreferredSize(new Dimension(225, 10));
+	 //   chosedCurrentPath.setPreferredSize(new Dimension(225, 50));
 	  //  chosedCurrentPath.setMaximumSize(new Dimension(500, 10));
 	    
 	    extensionField = new TextField(30);
@@ -242,11 +205,13 @@ public class Frame extends JFrame{
 	    byte1FieldHex = new TextField(30);
 	    byte1FieldHex.setEditable(false);
 	    byte1FieldHex.setFocusable(false);
+	    byte1FieldHex.setCursor(Cursor.getDefaultCursor());
 	    
 	    byte2FieldText = new TextField(30);
 	    byte2FieldHex = new TextField(30);
 	    byte2FieldHex.setEditable(false);
 	    byte2FieldHex.setFocusable(false);
+	    byte2FieldHex.setCursor(Cursor.getDefaultCursor());
 	    
 	    acceptButton = new JButton("Rozpocznij");
 	    acceptButton.setBackground(Color.GREEN);
@@ -281,20 +246,24 @@ public class Frame extends JFrame{
 	    	fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    	fileChooser.setAcceptAllFileFilterUsed(false);
 	    	
-	    	if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+	    	int result = fileChooser.showOpenDialog(this);
+	    	
+	    	if(result == JFileChooser.APPROVE_OPTION){
 	    		
 	    		//this.pathButton.setText(fileChooser.getSelectedFile().getAbsolutePath());
 	    		
+	    		File file = fileChooser.getSelectedFile();
 	    		
-	    		if(fileChooser.getSelectedFile().exists()){
-	    			this.chosedCurrentPath.setText(fileChooser.getSelectedFile().getAbsolutePath());
+	    		if(file.exists() && file.isDirectory()){
+	    			this.chosedCurrentPath.setText(file.getAbsolutePath());
 	    			root = fileChooser.getSelectedFile();
 	    		}
 	    		else{
-	    			JOptionPane.showMessageDialog(this, "Wybrany katalog nie istnieje");
+	    			JOptionPane.showMessageDialog(this, "Taki katalog nie istnieje");
 	    		}
-	    		
 	    	}
+	    	
+			
 	    });
 	    
 	    acceptButton.addActionListener((ActionEvent event) -> {
@@ -339,57 +308,7 @@ public class Frame extends JFrame{
 	    			sequence2 = getStringFromBytesArray(2);	
 	    		
 	    		SearchDialog searchDialog = new SearchDialog(root, extensionField.getText(), sequence1, sequence2);
-	    		//searchDialog.start();
-	    		
-	    		//JOptionPane.showMessageDialog(this, searchDialog);
-	    		
-	    		
-	    	//	Manager manager = new Manager(root, extensionField.getText(), sequence1, sequence2);
-	    	//	manager.start();
-	    		
-	    /*		System.out.println("Zakonczono");
-	    		JOptionPane.showMessageDialog(this, "Zakoñczono");
-	    		
-	    		if(manager.isAnyUnOpenedFile()){
-	    			StringBuilder sB = new StringBuilder();
-	    			
-	    			for(String s:manager.getUnOpenedFiles()){
-	    				sB.append(s);
-	    				sB.append('\n');
-	    			}
-	    			
-	    			JOptionPane.showMessageDialog(this, "Nie uda³o siê przeszukac nastepuj¹cych plikow z powodu braku uprawnieñ("+manager.getUnOpenedFiles().size() +")\n" + sB.toString());
-	    			
-	    		}
-	    		
-	    		
-	    		StringBuilder sB = new StringBuilder();
-	    		if(manager.isAnyOpenedFile()){
-	    			sB.append("Liczba przeszukanych plików: " + manager.getOpenedFiles().size() + "\n");
-	    			int i=0;
-	    			for(String s:manager.getOpenedFiles()){
-	    				sB.append(s + " ");
-	    				sB.append("Liczba zamian: " + manager.getNumberOfReplacesInFile(i));
-	    				sB.append('\n');
-	    				++i;
-	    			}
-	    		}
-	    		else{
-	    			sB.append("Nie znaleziono ¿adnego pliku o podanym rozszerzeniu");
-	    		}
-	    		JTextArea textArea = new JTextArea(10, 40);
-	    		textArea.setEditable(false);
-	    		textArea.setText(sB.toString());
-	    		
-	    		JScrollPane scrollPane = new JScrollPane(textArea);
-	    		
-	    		JPanel panel = new JPanel();
-	    		panel.add(scrollPane);
-	    	//	JProgressBar progressBar = new JProgressBar();
-	    	//	panel.add(progressBar);
-	    		
-	    		JOptionPane.showMessageDialog(this, panel, "Szczegó³y", JOptionPane.INFORMATION_MESSAGE);*/
-	    		
+	    		  		
 	    	}
 	    });
 	    

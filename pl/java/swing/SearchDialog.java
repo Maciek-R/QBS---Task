@@ -2,7 +2,6 @@ package pl.java.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -11,7 +10,6 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -104,40 +102,13 @@ public class SearchDialog extends JDialog{
 		}
 		
 		
-		/*StringBuilder sB = new StringBuilder();
-		if(manager.isAnyOpenedFile()){
-			sB.append("Liczba przeszukanych plików: " + manager.getOpenedFiles().size() + "\n");
-			int i=0;
-			for(String s:manager.getOpenedFiles()){
-				sB.append(s + " ");
-				sB.append("Liczba zamian: " + manager.getNumberOfReplacesInFile(i));
-				sB.append('\n');
-				++i;
-			}
-		}
-		else{
-			sB.append("Nie znaleziono ¿adnego pliku o podanym rozszerzeniu");
-		}*/
 		if(!manager.isAnyOpenedFile())
 			textArea.setText("Nie znaleziono ¿adnego pliku o podanym rozszerzeniu");
 		else{
 			textArea.append("Liczba przeszukanych plików: " + manager.getOpenedFiles().size());
 		}
-	//	JTextArea textArea = new JTextArea(10, 40);
-	//	textArea.setEditable(false);
-	//	textArea.setText(sB.toString());
-		
-		//JScrollPane scrollPane = new JScrollPane(textArea);
-		
-		//JPanel panel = new JPanel();
-		//panel.add(scrollPane);
-	//	JProgressBar progressBar = new JProgressBar();
-	//	panel.add(progressBar);
-		
-		//JOptionPane.showMessageDialog(this, panel, "Szczegó³y", JOptionPane.INFORMATION_MESSAGE);
 	}
 	public void setPercentProgressBar(int percent){
-		//System.out.println("PERCENT");
 		progressBar.setValue(percent);
 		progressBar.setString(Integer.toString(percent) + "%");
 	}

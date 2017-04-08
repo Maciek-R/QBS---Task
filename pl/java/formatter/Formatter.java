@@ -1,15 +1,10 @@
 package pl.java.formatter;
 
-import static pl.java.formatter.Formatter.BUFFER_LENGTH;
-import static pl.java.formatter.Formatter.STRING_TO_FIND;
-import static pl.java.formatter.Formatter.STRING_TO_REPLACE;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.file.Files;
 
 public class Formatter {
 	
@@ -64,26 +59,13 @@ public class Formatter {
 						
 						
 						String s1 = new String(bytes, 0, len);
-						//System.out.println(s1);
 						
-					//	int indexBehindLastFoundedWord = s1.lastIndexOf(STRING_TO_FIND);
-					//	if(indexBehindLastFoundedWord!=-1)
-					//		indexBehindLastFoundedWord+=STRING_TO_FIND.length();
-						
-					//	System.out.println("INDEX: " +indexBehindLastFoundedWord);
 						int indexBehindLastFoundedWord = findIndexBehindLastFoundedWord(s1);
 						int count = countNumberOfReplaces(s1);
 						numberOfReplaces+=count;
 						
 						
-						int indexWhereStartToSearch = BUFFER_LENGTH - (STRING_TO_FIND.length() - 1);
-					//	System.out.println(indexBehindLastFoundedWord);
-					//	System.out.println(indexWhereStartToSearch);
-						
-						
-						
-						
-						
+						int indexWhereStartToSearch = BUFFER_LENGTH - (STRING_TO_FIND.length() - 1);	
 						
 						int transition = BUFFER_LENGTH - indexWhereStartToSearch;
 						
@@ -91,57 +73,38 @@ public class Formatter {
 							if(indexBehindLastFoundedWord >= indexWhereStartToSearch){
 								transition = BUFFER_LENGTH - indexBehindLastFoundedWord;	//o tyle pozycji trzeba przesun¹æ kursor w lewo
 								
-								//zamien wszystkie s1 na poprawne i wrzuc do pliku obok
-							//	if(len == BUFFER_LENGTH){
 									String spom = s1.substring(0, indexBehindLastFoundedWord);
 									String ss = spom.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
 							
 									fos.write(ss.getBytes());
-								//	System.out.println("doda: "+ss);
-								//}
-							/*	else{
-									String ss = s1.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
-									fos.write(ss.getBytes());
-									System.out.println("doda: "+ss);
-								}*/
-								//System.out.println("aaa" + ss);
-								
-								
 							}
 							else{
-							//	z = BUFFER_LENGTH - bbb;
 								if(len == BUFFER_LENGTH){
 									String spom = s1.substring(0, indexWhereStartToSearch);
-								//	System.out.println("spom: "+spom);
 									String ss = spom.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
 									fos.write(ss.getBytes());
-							//		System.out.println("dodaje: "+ss);
 								}
 								else{
 									String ss = s1.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
 									fos.write(ss.getBytes());
-							//		System.out.println("doda: "+ss);
 								}
 							}
 						}
-						else{
+						else{//nie znaleziono podanego ci¹gu
 							String ss;
 							if(len==BUFFER_LENGTH){
 								String spom = s1.substring(0, indexWhereStartToSearch);
-								ss = spom.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
-							//	System.out.println(ss);
+								ss = spom;
+								//ss = spom.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
 							}
 							else{
-								ss = s1.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
-							//	System.out.println(ss);
+								ss = s1;
+								//ss = s1.replaceAll(STRING_TO_FIND, STRING_TO_REPLACE);
 							}
 							fos.write(ss.getBytes());
-						//	System.out.println("doda: "+ss);
-						//	System.out.println(ss);
 						}
 						
 						if(len!=BUFFER_LENGTH){	//koniec pliku, to nie przesuwaj ju¿ kursora
-							//System.out.println("tu");
 							break;
 						}
 						
@@ -153,14 +116,10 @@ public class Formatter {
 					
 					
 				} catch (FileNotFoundException e) {
-				//	System.out.println("Nie masz odpowiednich uprawnieñ");
 					System.out.println("Brak uprawnien");
 					return MESSAGE_PERMISSION_DENIED;
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-				//	e.printStackTrace();
-					//System.out.println("Nie masz odpowiednich uprawnieñ");
 					return -2;
 				}
 				
@@ -175,10 +134,6 @@ public class Formatter {
 			fromIndex += STRING_TO_FIND.length();
 			lastIndex = fromIndex;
 		}
-		
-		//toDo
-		//tu moge policzyc liczbe zamian, a raczej z tego skorzystac
-		//
 		return lastIndex;
 	}
 	private int countNumberOfReplaces(String s){

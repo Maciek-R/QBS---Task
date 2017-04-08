@@ -2,7 +2,6 @@ package pl.java.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,7 +13,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 public class ExtraDialog extends JDialog{
 	

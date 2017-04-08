@@ -1,33 +1,7 @@
 package pl.java.formatter;
-import java.awt.List;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-
-import javax.annotation.Generated;
-import javax.swing.JProgressBar;
 
 import pl.java.swing.SearchDialog;
 
@@ -117,6 +91,7 @@ public class Manager {
 	public int getNumberOfFiles(){
 		return goForNumberOfFiles(fileRoot);
 	}
+	
 	public int goForNumberOfFiles(File file){
 		int numOfFiles = getFiles(file, extension).length;
 		int numOfSubFiles = 0;

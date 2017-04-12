@@ -42,7 +42,7 @@ public class ExtraDialog extends JDialog{
     	setLocationRelativeTo(this);
     	setMinimumSize(new Dimension(480, 200));
     	setPreferredSize(new Dimension(480, 200));
-    	getContentPane().setBackground(Color.GRAY);
+    	getContentPane().setBackground(Color.decode("#e9ebee"));
     	setModal(true);
     	
     	
@@ -139,15 +139,20 @@ public class ExtraDialog extends JDialog{
     	hexTextField = new JTextField(10);
     	hexTextField.setEditable(false);
     	buttonAddByte = new JButton("Dodaj");
-    	buttonAddByte.setBackground(Color.GREEN);
+    	buttonAddByte.setBackground(Color.decode("#4267b2"));
+    	buttonAddByte.setForeground(Color.WHITE);
     	buttonAddHex = new JButton("Dodaj");
-    	buttonAddHex.setBackground(Color.GREEN);
+    	buttonAddHex.setBackground(Color.decode("#4267b2"));
+    	buttonAddHex.setForeground(Color.WHITE);
     	buttonOk = new JButton("OK");
-    	buttonOk.setBackground(Color.GREEN);
+    	buttonOk.setBackground(Color.decode("#4267b2"));
+    	buttonOk.setForeground(Color.WHITE);
     	buttonErase = new JButton("Usun");
-    	buttonErase.setBackground(Color.GREEN);
+    	buttonErase.setBackground(Color.decode("#4267b2"));
+    	buttonErase.setForeground(Color.WHITE);
     	buttonClear = new JButton("Wyczysc");
-    	buttonClear.setBackground(Color.GREEN);
+    	buttonClear.setBackground(Color.decode("#4267b2"));
+    	buttonClear.setForeground(Color.WHITE);
     	
 	}
 	private void initActions(){

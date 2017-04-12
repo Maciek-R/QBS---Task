@@ -64,7 +64,8 @@ public class Frame extends JFrame{
 	    setLocationRelativeTo(null);
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  //  setPreferredSize(new Dimension(500, 500));
-	    getContentPane().setBackground(Color.GRAY);
+	    getContentPane().setBackground(Color.decode("#e9ebee"));
+	  //  getContentPane().setBackground(new Color(235, 237, 240));
 	    
 	    initComponents();
 	    initLayout();  
@@ -180,6 +181,8 @@ public class Frame extends JFrame{
 		    gc.gridy = 9;
 		    gc.gridwidth = 3;
 		    add(acceptButton, gc);
+		    
+		    
 	}
 	
 	private void initComponents(){
@@ -194,7 +197,9 @@ public class Frame extends JFrame{
 	    hex2Label = new JLabel("Hexadecymalnie: ");
 	    
 	    pathButton = new JButton("Podaj katalog");
-	    pathButton.setBackground(Color.GREEN);
+	    pathButton.setBackground(Color.decode("#4267b2"));
+	    pathButton.setForeground(Color.WHITE);
+	    pathButton.setFocusPainted(false);
 	    
 	    chosedCurrentPath = new JLabel("");
 	 //   chosedCurrentPath.setPreferredSize(new Dimension(225, 50));
@@ -214,28 +219,32 @@ public class Frame extends JFrame{
 	    byte2FieldHex.setCursor(Cursor.getDefaultCursor());
 	    
 	    acceptButton = new JButton("Rozpocznij");
-	    acceptButton.setBackground(Color.GREEN);
+	    acceptButton.setBackground(Color.decode("#4267b2"));
+	    acceptButton.setForeground(Color.WHITE);
 	    specialButton1 = new JButton("Zaawansowane");
 	    specialButton1.setEnabled(false);
-	    specialButton1.setBackground(Color.GREEN);
+	    specialButton1.setBackground(Color.decode("#4267b2"));
+	    specialButton1.setForeground(Color.WHITE);
 	    
 	    specialButton2 = new JButton("Zaawansowane");
 	    specialButton2.setEnabled(false);
-	    specialButton2.setBackground(Color.GREEN);
+	    specialButton2.setBackground(Color.decode("#4267b2"));
+	    specialButton2.setForeground(Color.WHITE);
+	    
 	    
 	    checkBoxText1 = new JCheckBox();
 	    checkBoxText1.setSelected(true);
-	    checkBoxText1.setBackground(Color.GRAY);
+	    checkBoxText1.setBackground(Color.decode("#e9ebee"));
 	    
 	    checkBoxHex1 = new JCheckBox();
-	    checkBoxHex1.setBackground(Color.GRAY);
+	    checkBoxHex1.setBackground(Color.decode("#e9ebee"));
 	    
 	    checkBoxText2 = new JCheckBox();
 	    checkBoxText2.setSelected(true);
-	    checkBoxText2.setBackground(Color.GRAY);
+	    checkBoxText2.setBackground(Color.decode("#e9ebee"));
 	    
 	    checkBoxHex2 = new JCheckBox();
-	    checkBoxHex2.setBackground(Color.GRAY);
+	    checkBoxHex2.setBackground(Color.decode("#e9ebee"));
 	    
 	}
 	private void initActions(){
@@ -273,9 +282,9 @@ public class Frame extends JFrame{
 	  
 	    	
 	    	if(result == JOptionPane.YES_OPTION){
-	    		System.out.println("Rozpoczeto");
+	    	//	System.out.println("Rozpoczeto");
 	    		if(extensionField.getText().equals("")){
-	    			JOptionPane.showMessageDialog(this, "Nie podano rozszerzenia!");
+	    			JOptionPane.showMessageDialog(this, "Nie podano rozszerzenia!\nPrzyk³adowo: txt, bmp.");
 	    			return;
 	    		}
 	    		if(root == null){
@@ -292,18 +301,18 @@ public class Frame extends JFrame{
 	    		}
 	    		
 	    		
-	    		System.out.println(root.getAbsolutePath());
+	    		//System.out.println(root.getAbsolutePath());
 	    		
-	    		String sequence1;
-	    		String sequence2;
+	    		byte[] sequence1;
+	    		byte[] sequence2;
 	    		
 	    		if(checkBoxText1.isSelected())
-	    			sequence1 = byte1FieldText.getText();
+	    			sequence1 = byte1FieldText.getText().getBytes();
 	    		else
 	    			sequence1 = getStringFromBytesArray(1);			//trzeba zamienic bytes1 na Stringa
 	    		
 	    		if(checkBoxText2.isSelected())
-	    			sequence2 = byte2FieldText.getText();
+	    			sequence2 = byte2FieldText.getText().getBytes();
 	    		else
 	    			sequence2 = getStringFromBytesArray(2);	
 	    		
@@ -323,7 +332,7 @@ public class Frame extends JFrame{
 	    	
 	    //	searchDialog.start();
 	    	//JOptionPane.showMessageDialog(this, panel);
-	    	System.out.println("asd");
+	    	
 	    	
 	    });
 	    specialButton2.addActionListener((ActionEvent event) ->{
@@ -378,16 +387,16 @@ public class Frame extends JFrame{
 	   
 	}
 	
-	private String getStringFromBytesArray(int nr){
+	private byte[] getStringFromBytesArray(int nr){
 		byte[] bs = null;
 		ArrayList<Byte> bytes = null;
 		if(nr==1){
-			if(bytes1 == null) return new String("");
+			if(bytes1 == null) return new byte[]{};
 			bs = new byte[bytes1.size()];
 			bytes = bytes1;
 		}
 		else if(nr == 2){
-			if(bytes2 == null) return new String("");
+			if(bytes2 == null) return new byte[]{};
 			bs = new byte[bytes2.size()];
 			bytes = bytes2;
 		}
@@ -400,7 +409,7 @@ public class Frame extends JFrame{
     	for(byte b:bs){
     		System.out.println(b);
     	}
-    	
-    	return new String(bs);
+    	return bs;
+    	//return new String(bs);
 	}
 }

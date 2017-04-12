@@ -11,8 +11,8 @@ public class Manager {
 
 	private File fileRoot;
 	private String extension;
-	private String stringToFind;
-	private String stringToReplace;
+	private byte[] stringToFind;
+	private byte[] stringToReplace;
 	
 	private ArrayList<String> openedFiles;
 	private ArrayList<Integer> numberOfReplacesInFile;
@@ -22,7 +22,7 @@ public class Manager {
 	private int numberOfCheckedFiles;
 	private int numOfAllFiles;
 	
-	public Manager(File root, String extension, String stringToFind, String stringToReplace, SearchDialog searchDialog){
+	public Manager(File root, String extension, byte[] stringToFind, byte[] stringToReplace, SearchDialog searchDialog){
 		this.fileRoot = root;
 		this.extension = extension;
 		this.stringToFind = stringToFind;

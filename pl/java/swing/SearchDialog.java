@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -26,13 +27,15 @@ public class SearchDialog extends JDialog{
 	JTextArea textArea;
 	JScrollPane scrollPane;
 	JButton buttonOk;
+	ProgressBarWorker progres;
 	
-	public SearchDialog(File root, String extension, String stringToFind, String stringToReplace){
+	public SearchDialog(File root, String extension, byte[] stringToFind, byte[] stringToReplace){
 		setTitle("Postêp");
     	setLocationRelativeTo(this);
-    	setMinimumSize(new Dimension(200, 200));
-    	//setPreferredSize(new Dimension(480, 200));
-    	getContentPane().setBackground(Color.GRAY);
+    	setMinimumSize(new Dimension(550, 200));
+    	//setPreferredSize(new Dimension(550, 200));
+    	getContentPane().setBackground(Color.decode("#e9ebee"));
+    	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	setModal(true);
     	
     	initComponents();
@@ -43,7 +46,7 @@ public class SearchDialog extends JDialog{
 		manager = new Manager(root, extension, stringToFind, stringToReplace, this);
 		//manager.start();
 	//	setModal(true);
-		ProgressBarWorker progres = new ProgressBarWorker();
+		progres = new ProgressBarWorker();
 		progres.execute();
 		setVisible(true);
 		
@@ -53,10 +56,12 @@ public class SearchDialog extends JDialog{
 		progressBar.setStringPainted(true);
     	textArea = new JTextArea(15, 50);
 		textArea.setEditable(false);
-		textArea.setBackground(Color.GRAY);
+		textArea.setBackground(Color.decode("#e9ebee"));
 		scrollPane = new JScrollPane(textArea);
 		buttonOk = new JButton("OK");
-		buttonOk.setBackground(Color.GREEN);
+		buttonOk.setBackground(Color.decode("#4267b2"));
+		buttonOk.setForeground(Color.WHITE);
+		buttonOk.setEnabled(false);
 		
 	}
 	private void initLayout(){
@@ -128,6 +133,7 @@ public class SearchDialog extends JDialog{
 		@Override
 		protected Void doInBackground() throws Exception {
 			start();
+			System.out.println("start");
 			
 			return null;
 		}
@@ -135,7 +141,9 @@ public class SearchDialog extends JDialog{
 		@Override
 		protected void done() {
 			progressBar.setValue(100);
+			System.out.println("done");
 			progressBar.setString("100%");
+			buttonOk.setEnabled(true);
 			super.done();
 		}
 		
